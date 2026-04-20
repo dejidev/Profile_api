@@ -1,0 +1,26 @@
+{
+  "/": {
+    "percentage": null,
+    "totalStatements": null,
+    "coveredStatements": null
+  },
+  "/server.js": {
+    "percentage": null,
+    "totalStatements": null,
+    "coveredStatements": null,
+    "testables": [
+      {
+        "name": "getAgeGroup",
+        "percentage": null,
+        "totalStatements": null,
+        "coveredStatements": null
+      },
+      {
+        "name": "fetchExternal",
+        "percentage": null,
+        "totalStatements": null,
+        "coveredStatements": null
+      }
+    ]
+  }
+}
