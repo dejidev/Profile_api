@@ -1,5 +1,4 @@
 const express = require('express');
-const { v7: uuidv7 } = require('uuid');
 
 const app = express();
 app.use(express.json());
@@ -12,6 +11,22 @@ app.use((req, res, next) => {
     if (req.method === 'OPTIONS') return res.sendStatus(204);
     next();
 });
+
+// UUID v7 generator (no package needed)
+function generateUUIDv7() {
+    const now = Date.now();
+    const timeHigh = Math.floor(now / 0x100000000);
+    const timeLow = now & 0xffffffff;
+    const rand = () => Math.floor(Math.random() * 0x10000).toString(16).padStart(4, '0');
+    const timeHighHex = timeHigh.toString(16).padStart(8, '0');
+    const timeLowHex = timeLow.toString(16).padStart(8, '0');
+    const part1 = timeHighHex.slice(0, 8);
+    const part2 = timeLowHex.slice(0, 4);
+    const part3 = '7' + rand().slice(1);
+    const part4 = (8 + Math.floor(Math.random() * 4)).toString(16) + rand().slice(1);
+    const part5 = rand() + rand() + rand();
+    return `${part1}-${part2}-${part3}-${part4}-${part5}`;
+}
 
 // In-memory store
 const profiles = {};
@@ -78,7 +93,7 @@ app.post('/api/profiles', async (req, res) => {
         );
 
         const profile = {
-            id: uuidv7(),
+            id: generateUUIDv7(),
             name: nameLower,
             gender: genderData.gender,
             gender_probability: genderData.probability,
